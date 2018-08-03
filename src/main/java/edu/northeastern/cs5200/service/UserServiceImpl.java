@@ -1,11 +1,10 @@
 package edu.northeastern.cs5200.service;
 
-
 import java.util.Collection;
 import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,18 +23,19 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     
-    HashSet<Role> allRoles = new HashSet<Role>((Collection<? extends Role>) roleRepository.findAll());
-
+ 
+ 
 	@Override
 	public void save(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(allRoles);
+        user.setRoles(new HashSet<Role>((Collection<? extends Role>) roleRepository.findAll()));
         userRepository.save(user);
 	}
 
 	@Override
 	public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
